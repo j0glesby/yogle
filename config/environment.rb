@@ -8,7 +8,7 @@ require File.join(File.dirname(__FILE__), 'boot')
 
 if ENV['RAILS_ENV'] == 'production'  # don't bother on dev
   ENV['GEM_PATH'] = '/home/j0glesby/.gems' #+ ':/usr/lib/ruby/gems/1.8'  # Need this or Passenger fails to start
-  require '/home/j0glesby/.gems/gems/ambethia-smtp-tls-1.1.2/lib/smtp-tls.rb'  # Need this for EACH LOCAL gem you want to use, otherwise it uses the ones in /usr/lib
+  require '/home/j0glesby/.gem/gems/ambethia-smtp-tls-1.1.2/lib/smtp-tls.rb'  # Need this for EACH LOCAL gem you want to use, otherwise it uses the ones in /usr/lib
 end
 
 Rails::Initializer.run do |config|
