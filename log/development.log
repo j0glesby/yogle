@@ -1,0 +1,1308 @@
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (133.3ms)[0m   [0mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (200.4ms)[0m   [0;1mCREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+Migrating to CreatePages (20090922025527)
+  [4;35;1mSQL (127.1ms)[0m   [0mCREATE TABLE `pages` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `title` varchar(255), `body` text, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090922025527')[0m
+Migrating to CreateUsers (20090922025645)
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (103.9ms)[0m   [0;1mCREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `login` varchar(255), `email` varchar(255), `firstName` varchar(255), `lastName` varchar(255), `crypted_password` varchar(40), `salt` varchar(40), `created_at` datetime, `updated_at` datetime, `remember_token` varchar(255), `remember_token_expires_at` datetime, `activation_code` varchar(40), `activated_at` datetime, `password_reset_code` varchar(40), `enabled` tinyint(1) DEFAULT 1) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20090922025645')[0m
+Migrating to CreateRoles (20090922070654)
+  [4;36;1mSQL (94.8ms)[0m   [0;1mCREATE TABLE `roles` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `rolename` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20090922070654')[0m
+Migrating to CreatePermissions (20090922070717)
+  [4;36;1mSQL (106.4ms)[0m   [0;1mCREATE TABLE `permissions` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `role_id` int(11) NOT NULL, `user_id` int(11) NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mRole Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mRole Create (0.3ms)[0m   [0mINSERT INTO `roles` (`updated_at`, `rolename`, `created_at`) VALUES('2009-09-22 08:02:46', 'administrator', '2009-09-22 08:02:46')[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Create (0.3ms)[0m   [0mINSERT INTO `users` (`salt`, `lastName`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `firstName`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('ea304654e19c67f706c1052cfa3921e8c657506e', NULL, '2009-09-22 08:02:46', NULL, 'f1032959bca8ae60b0fdfcbc1ca9cbf0eabe52df', NULL, '77e9e63f02cde73e865d989411b2e79831df4460', NULL, NULL, 1, NULL, 'admin', 'jason@yoglesoft.com', '2009-09-22 08:02:46')[0m
+Sent mail to jason@yoglesoft.com
+
+Date: Tue, 22 Sep 2009 03:02:46 -0500
+From: support@yoglesoft.com
+To: jason@yoglesoft.com
+Subject: Yogle Account Registration Please activate your new account
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+Your account has been created.
+
+  Username: admin
+
+Visit this url to activate your account:
+
+  http://localhost:3000/activate/77e9e63f02cde73e865d989411b2e79831df4460
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Update (0.5ms)[0m   [0;1mUPDATE `users` SET `activated_at` = '2009-09-22 08:03:16', `updated_at` = '2009-09-22 08:03:16' WHERE `id` = 1[0m
+Sent mail to jason@yoglesoft.com
+
+Date: Tue, 22 Sep 2009 03:03:17 -0500
+From: support@yoglesoft.com
+To: jason@yoglesoft.com
+Subject: Yogle Account Registration Your account has been activated!
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+admin, your account has been activated.  To visit the site, follow the link below:
+
+  http://localhost:3000/
+  [4;35;1mSQL (1.4ms)[0m   [0mCOMMIT[0m
+  [4;36;1mRole Load (0.9ms)[0m   [0;1mSELECT * FROM `roles` WHERE (`roles`.`rolename` = 'administrator') LIMIT 1[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`login` = 'admin') LIMIT 1[0m
+  [4;36;1mPermission Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `permissions`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mPermission Create (0.3ms)[0m   [0;1mINSERT INTO `permissions` (`updated_at`, `role_id`, `user_id`, `created_at`) VALUES('2009-09-22 08:03:47', 1, 1, '2009-09-22 08:03:47')[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090922070717')[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mdescribe `pages`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW KEYS FROM `pages`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSHOW FIELDS FROM `permissions`[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mdescribe `permissions`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `permissions`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mdescribe `roles`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW KEYS FROM `roles`[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mdescribe `users`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW KEYS FROM `users`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#index (for 127.0.0.1 at 2009-09-22 03:10:42) [GET]
+  [4;36;1mPage Load (0.3ms)[0m   [0;1mSELECT * FROM `pages` [0m
+Rendering template within layouts/pages
+Rendering pages/index
+Completed in 33ms (View: 29, DB: 1) | 200 OK [http://localhost/]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#new (for 127.0.0.1 at 2009-09-22 03:10:49) [GET]
+  [4;35;1mPage Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Rendering template within layouts/pages
+Rendering pages/new
+Completed in 12ms (View: 6, DB: 2) | 200 OK [http://localhost/pages/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#create (for 127.0.0.1 at 2009-09-22 03:10:58) [POST]
+  Parameters: {"commit"=>"Create", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8=", "page"=>{"body"=>"This is a test", "title"=>"Test"}}
+  [4;36;1mPage Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mPage Create (0.3ms)[0m   [0;1mINSERT INTO `pages` (`updated_at`, `title`, `body`, `created_at`) VALUES('2009-09-22 08:10:58', 'Test', 'This is a test', '2009-09-22 08:10:58')[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/pages/1
+Completed in 16ms (DB: 2) | 302 Found [http://localhost/pages]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#show (for 127.0.0.1 at 2009-09-22 03:10:58) [GET]
+  Parameters: {"id"=>"1"}
+  [4;36;1mPage Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+  [4;35;1mPage Load (0.6ms)[0m   [0mSELECT * FROM `pages` WHERE (`pages`.`id` = 1) [0m
+Rendering template within layouts/pages
+Rendering pages/show
+Completed in 11ms (View: 5, DB: 2) | 200 OK [http://localhost/pages/1]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2009-09-22 03:11:53) [GET]
+
+NoMethodError (undefined method `check_administrator_role' for #<UsersController:0x25b1d80>):
+  
+
+Rendered rescues/_trace (91.7ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (41.8ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2009-09-22 10:43:34) [GET]
+
+NoMethodError (undefined method `check_administrator_role' for #<UsersController:0x276d0ac>):
+  
+
+Rendered rescues/_trace (30.4ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2009-09-22 10:43:38) [GET]
+
+NoMethodError (undefined method `check_administrator_role' for #<UsersController:0x265efe4>):
+  
+
+Rendered rescues/_trace (32.2ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#index (for 127.0.0.1 at 2009-09-22 10:46:45) [GET]
+Redirected to http://localhost:3000/session/new
+Filter chain halted as [:check_administrator_role] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/users]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 10:46:45) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 157ms (View: 97, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 10:46:52) [GET]
+  [4;36;1mUser Columns (63.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 86ms (View: 19, DB: 64) | 200 OK [http://localhost/users/new]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 10:47:38) [GET]
+  [4;35;1mUser Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 8ms (View: 4, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 10:48:14) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing PasswordsController#new (for 127.0.0.1 at 2009-09-22 10:50:31) [GET]
+Rendering template within layouts/application
+Rendering passwords/new
+Completed in 8ms (View: 6, DB: 0) | 200 OK [http://localhost/forgot_password]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 10:50:39) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 10:50:48) [GET]
+  [4;36;1mUser Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 8ms (View: 3, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#show (for 127.0.0.1 at 2009-09-22 10:51:02) [GET]
+  Parameters: {"id"=>"index"}
+Redirected to http://localhost:3000/session/new
+Filter chain halted as [:login_required] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/users/index]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 10:51:02) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 10:51:09) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 10:51:25) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 11ms (View: 9, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 10:51:28) [GET]
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 14ms (View: 9, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 10:56:18) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 11:18:30) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 11:19:28) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 7ms (View: 5, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 11:20:01) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 11ms (View: 9, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#edit (for 127.0.0.1 at 2009-09-22 11:20:07) [GET]
+
+ActionController::UnknownAction (No action responded to edit. Actions: create, destroy, and new):
+  
+
+Rendering rescues/layout (not_found)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 11:21:07) [GET]
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 15ms (View: 10, DB: 2) | 200 OK [http://localhost/signup]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 11:21:12) [GET]
+  [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 8ms (View: 4, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 11:29:34) [GET]
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 8ms (View: 3, DB: 2) | 200 OK [http://localhost/signup]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#show (for 127.0.0.1 at 2009-09-22 11:32:52) [GET]
+  Parameters: {"id"=>"create"}
+Redirected to http://localhost:3000/session/new
+Filter chain halted as [:login_required] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/users/create]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 11:32:52) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 11:49:49) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 6ms (View: 5, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 11:50:12) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 6ms (View: 4, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 12:24:53) [GET]
+  [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 8ms (View: 4, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing PagesController#index (for 127.0.0.1 at 2009-09-22 12:34:15) [GET]
+  [4;36;1mPage Load (87.3ms)[0m   [0;1mSELECT * FROM `pages` [0m
+Rendering template within layouts/pages
+Rendering pages/index
+  [4;35;1mPage Columns (19.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 129ms (View: 18, DB: 106) | 200 OK [http://localhost/]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 12:34:22) [GET]
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 10ms (View: 4, DB: 2) | 200 OK [http://localhost/signup]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 12:34:25) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 12:34:28) [GET]
+  [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 8ms (View: 3, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing PasswordsController#new (for 127.0.0.1 at 2009-09-22 12:34:30) [GET]
+Rendering template within layouts/application
+Rendering passwords/new
+Completed in 8ms (View: 6, DB: 0) | 200 OK [http://localhost/forgot_password]
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#index (for 127.0.0.1 at 2009-09-22 12:37:31) [GET]
+Redirected to http://localhost:3000/session/new
+Filter chain halted as [:check_administrator_role] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/users]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 12:37:31) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;36;1mSQL (10.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing AccountsController#new (for 127.0.0.1 at 2009-09-22 14:08:45) [GET]
+Redirected to http://localhost:3000/session/new
+Filter chain halted as [:login_required] rendered_or_redirected.
+Completed in 1ms (DB: 10) | 302 Found [http://localhost/accounts/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 14:08:45) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 14:09:19) [GET]
+  [4;36;1mUser Columns (33.7ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 65ms (View: 28, DB: 34) | 200 OK [http://localhost/users/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#show (for 127.0.0.1 at 2009-09-22 14:13:40) [GET]
+
+ActionController::UnknownAction (No action responded to show. Actions: create, destroy, and new):
+  
+
+Rendering rescues/layout (not_found)
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#index (for 127.0.0.1 at 2009-09-22 14:13:46) [GET]
+
+ActionController::UnknownAction (No action responded to index. Actions: create, destroy, and new):
+  
+
+Rendering rescues/layout (not_found)
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 14:13:55) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+DEPRECATION WARNING: Disabling sessions for a single controller has been deprecated. Sessions are now lazy loaded. So if you don't access them, consider them off. You can still modify the session cookie options with request.session_options.. (called from /Users/charioglesby/Development/ruby/yogle/app/controllers/application_controller.rb:8)
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 14:14:36) [GET]
+  [4;35;1mUser Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 9ms (View: 4, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 14:23:33) [GET]
+  [4;36;1mUser Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 8ms (View: 4, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 19:47:21) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 4ms (View: 2, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (201.9ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (15.3ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 20:54:43) [GET]
+  [4;35;1mUser Columns (121.9ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Completed in 861ms (View: 557, DB: 339) | 200 OK [http://localhost/users/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 20:58:52) [GET]
+  [4;36;1mUser Columns (2.5ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Loading users new stuff:
+Finished Loading users new stuff:
+Completed in 93ms (View: 61, DB: 3) | 200 OK [http://localhost/users/new]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 21:00:50) [GET]
+  [4;35;1mUser Columns (2.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Loading users new stuff:
+Just past form tag:
+Middle of the form:
+End of form:
+Finished Loading users new stuff:
+Completed in 14ms (View: 9, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 21:13:31) [GET]
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Loading users new stuff:
+Just past form tag:
+Middle of the form:
+End of form:
+Finished Loading users new stuff:
+Completed in 14ms (View: 10, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 21:28:49) [GET]
+  [4;35;1mUser Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Loading users new stuff:
+user
+Just past form tag:
+Middle of the form:
+End of form:
+Finished Loading users new stuff:
+Completed in 94ms (View: 89, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#create (for 127.0.0.1 at 2009-09-22 21:29:24) [POST]
+  Parameters: {"user"=>{"lastName"=>"Oglesby", "password_confirmation"=>"charic", "firstName"=>"Jason", "password"=>"charic", "login"=>"j0glesby", "email"=>"jason@yoglesoft.com"}, "commit"=>"Sign up", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8="}
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Load (171.3ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`login`) = BINARY 'j0glesby') LIMIT 1[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`email`) = BINARY 'jason@yoglesoft.com') LIMIT 1[0m
+  [4;36;1mSQL (12.5ms)[0m   [0;1mROLLBACK[0m
+Rendering template within layouts/application
+Rendering users/new
+Loading users new stuff:
+user
+Just past form tag:
+Middle of the form:
+End of form:
+Finished Loading users new stuff:
+Completed in 557ms (View: 4, DB: 187) | 200 OK [http://localhost/users]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#create (for 127.0.0.1 at 2009-09-22 21:29:51) [POST]
+  Parameters: {"user"=>{"lastName"=>"Oglesby", "password_confirmation"=>"charic", "firstName"=>"Jason", "password"=>"charic", "login"=>"j0glesby", "email"=>"oglesby_jason@yahoo.com"}, "commit"=>"Sign up", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8="}
+  [4;35;1mUser Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`login`) = BINARY 'j0glesby') LIMIT 1[0m
+  [4;36;1mUser Load (0.1ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`email`) = BINARY 'oglesby_jason@yahoo.com') LIMIT 1[0m
+  [4;35;1mUser Create (27.2ms)[0m   [0mINSERT INTO `users` (`salt`, `lastName`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `firstName`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('314753e787cfe1c34d5af465dba9a2a942cd180a', 'Oglesby', '2009-09-23 02:29:51', NULL, 'aaf57846d1c0e10e27b1c8ea3e4e8db2de45b91a', NULL, 'ee97fdb67f4ce097298713aebec5655c963bef7b', 'Jason', NULL, 1, NULL, 'j0glesby', 'oglesby_jason@yahoo.com', '2009-09-23 02:29:51')[0m
+Sent mail to oglesby_jason@yahoo.com
+
+Date: Tue, 22 Sep 2009 21:29:51 -0500
+From: support@yoglesoft.com
+To: oglesby_jason@yahoo.com
+Subject: Yogle Account Registration Please activate your new account
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+Your account has been created.
+
+  Username: j0glesby
+
+Visit this url to activate your account:
+
+  http://localhost:3000/activate/ee97fdb67f4ce097298713aebec5655c963bef7b
+  [4;36;1mSQL (0.7ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/login
+Completed in 30794ms (DB: 30) | 302 Found [http://localhost/users]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 21:30:22) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-09-22 21:30:34) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8=", "login"=>"j0glesby", "password"=>"charic"}
+  [4;35;1mUser Load (0.6ms)[0m   [0mSELECT * FROM `users` WHERE (login = 'j0glesby') LIMIT 1[0m
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 9ms (View: 1, DB: 4) | 200 OK [http://localhost/session]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 21:30:46) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-09-22 21:30:56) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8=", "login"=>"j0glesby", "password"=>"charic"}
+  [4;35;1mUser Load (0.5ms)[0m   [0mSELECT * FROM `users` WHERE (login = 'j0glesby') LIMIT 1[0m
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 9ms (View: 1, DB: 2) | 200 OK [http://localhost/session]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2009-09-22 21:31:08) [GET]
+Redirected to http://localhost:3000/session/new
+Filter chain halted as [:check_administrator_role] rendered_or_redirected.
+Completed in 1ms (DB: 2) | 302 Found [http://localhost/users]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 21:31:08) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing AccountsController#index (for 127.0.0.1 at 2009-09-22 21:31:16) [GET]
+Redirected to http://localhost:3000/session/new
+Filter chain halted as [:login_required] rendered_or_redirected.
+Completed in 1ms (DB: 0) | 302 Found [http://localhost/accounts]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 21:31:16) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/session/new]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 22:06:19) [GET]
+  [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Loading users new stuff:
+user
+Just past form tag:
+Middle of the form:
+End of form:
+Finished Loading users new stuff:
+Completed in 8ms (View: 4, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#create (for 127.0.0.1 at 2009-09-22 22:06:56) [POST]
+  Parameters: {"user"=>{"lastName"=>"Oglesby", "password_confirmation"=>"charic", "firstName"=>"Chari", "password"=>"charic", "login"=>"chari", "email"=>"charioglesby@yahoo.com"}, "commit"=>"Sign up", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8="}
+  [4;36;1mUser Columns (6.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`login`) = BINARY 'chari') LIMIT 1[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`email`) = BINARY 'charioglesby@yahoo.com') LIMIT 1[0m
+  [4;36;1mUser Create (0.2ms)[0m   [0;1mINSERT INTO `users` (`salt`, `lastName`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `firstName`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('18d9f3b9104f78af6a25dec7034bf04534724391', 'Oglesby', '2009-09-23 03:06:56', NULL, '0523760196b7e06ec61b14be751181fa7cd5cffb', NULL, 'f8e110a35cc99345e8a3b44172ca5a1a89aebf91', 'Chari', NULL, 1, NULL, 'chari', 'charioglesby@yahoo.com', '2009-09-23 03:06:56')[0m
+Sent mail to charioglesby@yahoo.com
+
+Date: Tue, 22 Sep 2009 22:06:56 -0500
+From: support@yoglesoft.com
+To: charioglesby@yahoo.com
+Subject: Yogle Account Registration Please activate your new account
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+Your account has been created.
+
+  Username: chari
+
+Visit this url to activate your account:
+
+  http://localhost:3000/activate/f8e110a35cc99345e8a3b44172ca5a1a89aebf91
+  [4;35;1mSQL (0.6ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/login
+Completed in 30040ms (DB: 8) | 302 Found [http://localhost/users]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 22:07:26) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-09-22 22:15:53) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8=", "login"=>"admin", "password"=>"charic"}
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (login = 'admin') LIMIT 1[0m
+  [4;35;1mUser Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Redirected to http://localhost:3000/accounts
+Completed in 124ms (DB: 2) | 302 Found [http://localhost/session]
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing AccountsController#index (for 127.0.0.1 at 2009-09-22 22:15:53) [GET]
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (18.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+
+ActionController::UnknownAction (No action responded to index. Actions: edit, show, and update):
+  
+
+Rendering rescues/layout (not_found)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2009-09-22 22:16:06) [GET]
+  Parameters: {"id"=>"index"}
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.1ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [4;36;1mRole Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mRole Load (25.3ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 1)) LIMIT 1[0m
+Completed in 106ms (View: 73, DB: 31) | 200 OK [http://localhost/users/index]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2009-09-22 22:16:13) [GET]
+  [4;36;1mUser Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mRole Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 1)) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` [0m
+Rendering template within layouts/application
+Rendering users/index
+Rendered users/_user (16.4ms)
+Rendered users/_user (0.4ms)
+Rendered users/_user (0.3ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 1)) LIMIT 1[0m
+Completed in 41ms (View: 26, DB: 6) | 200 OK [http://localhost/users]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing AccountsController#index (for 127.0.0.1 at 2009-09-22 22:16:29) [GET]
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+
+ActionController::UnknownAction (No action responded to index. Actions: edit, show, and update):
+  
+
+Rendering rescues/layout (not_found)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing AccountsController#edit (for 127.0.0.1 at 2009-09-22 22:16:48) [GET]
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+Rendering template within layouts/application
+Rendering accounts/edit
+  [4;36;1mRole Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 1)) LIMIT 1[0m
+Completed in 53ms (View: 45, DB: 5) | 200 OK [http://localhost/accounts/edit]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2009-09-22 22:16:55) [GET]
+  [4;36;1mUser Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.9ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mRole Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 1)) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` [0m
+Rendering template within layouts/application
+Rendering users/index
+Rendered users/_user (1.9ms)
+Rendered users/_user (0.3ms)
+Rendered users/_user (0.3ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 1)) LIMIT 1[0m
+Completed in 20ms (View: 5, DB: 5) | 200 OK [http://localhost/users]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing RolesController#index (for 127.0.0.1 at 2009-09-22 22:17:05) [GET]
+  Parameters: {"user_id"=>"2"}
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mRole Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mRole Load (0.4ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 1)) LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mRole Load (0.1ms)[0m   [0mSELECT * FROM `roles` [0m
+Rendering template within layouts/application
+Rendering roles/index
+
+ActionView::TemplateError (You have a nil object when you didn't expect it!
+You might have expected an instance of Array.
+The error occurred while evaluating nil.each) on line #8 of app/views/roles/index.html.erb:
+5:     <th>Rolename</th>
+6:   </tr>
+7: 
+8: <% @roles.each do |role| %>
+9:   <tr>
+10:     <td><%=h role.rolename %></td>
+11:     <td><%= link_to 'Show', role %></td>
+
+    app/views/roles/index.html.erb:8
+
+Rendered rescues/_trace (98.5ms)
+Rendered rescues/_request_and_response (1.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 22:18:13) [GET]
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.9ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+Redirected to http://localhost:3000/
+Filter chain halted as [:not_logged_in_required] rendered_or_redirected.
+Completed in 5ms (DB: 3) | 302 Found [http://localhost/users/new]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#index (for 127.0.0.1 at 2009-09-22 22:18:13) [GET]
+  [4;36;1mPage Load (10.6ms)[0m   [0;1mSELECT * FROM `pages` [0m
+Rendering template within layouts/pages
+Rendering pages/index
+  [4;35;1mPage Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 31ms (View: 13, DB: 12) | 200 OK [http://localhost/]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 22:18:24) [GET]
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+Redirected to http://localhost:3000/
+Filter chain halted as [:not_logged_in_required] rendered_or_redirected.
+Completed in 5ms (DB: 3) | 302 Found [http://localhost/signup]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#index (for 127.0.0.1 at 2009-09-22 22:18:24) [GET]
+  [4;36;1mPage Load (0.3ms)[0m   [0;1mSELECT * FROM `pages` [0m
+Rendering template within layouts/pages
+Rendering pages/index
+  [4;35;1mPage Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 8ms (View: 3, DB: 2) | 200 OK [http://localhost/]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ApplicationController#index (for 127.0.0.1 at 2009-09-22 22:18:34) [GET]
+
+ActionController::RoutingError (No route matches "/admin" with {:method=>:get}):
+  
+
+Rendering rescues/layout (not_found)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#destroy (for 127.0.0.1 at 2009-09-22 22:18:59) [GET]
+  [4;36;1mUser Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.1ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/login
+Completed in 9ms (DB: 3) | 302 Found [http://localhost/logout]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 22:19:00) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 88ms (View: 24, DB: 0) | 200 OK [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 22:19:04) [GET]
+  [4;36;1mUser Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Loading users new stuff:
+user
+Just past form tag:
+Middle of the form:
+End of form:
+Finished Loading users new stuff:
+Completed in 12ms (View: 7, DB: 2) | 200 OK [http://localhost/users/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#create (for 127.0.0.1 at 2009-09-22 22:20:11) [POST]
+  Parameters: {"user"=>{"lastName"=>"Oglesby", "password_confirmation"=>"charic", "firstName"=>"Jason", "password"=>"charic", "login"=>"joglesby", "email"=>"j0glesby@yahoo.com"}, "commit"=>"Sign up", "authenticity_token"=>"XpmkCr9pwKedf9LKkzUyheAp1Zjv4M7gdE7FpMHKiJY="}
+  [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (0.5ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`login`) = BINARY 'joglesby') LIMIT 1[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`email`) = BINARY 'j0glesby@yahoo.com') LIMIT 1[0m
+  [4;35;1mUser Create (0.3ms)[0m   [0mINSERT INTO `users` (`salt`, `lastName`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `firstName`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('849a0e86efb35e85e9175cbf3c2216b4600cda46', 'Oglesby', '2009-09-23 03:20:11', NULL, 'c8bc13aea47094e4f82351f1c7cdb74463681023', NULL, '72b1b8dfb1af21835f17fc1a43f9108203c38b1a', 'Jason', NULL, 1, NULL, 'joglesby', 'j0glesby@yahoo.com', '2009-09-23 03:20:11')[0m
+Sent mail to j0glesby@yahoo.com
+
+Date: Tue, 22 Sep 2009 22:20:11 -0500
+From: support@yoglesoft.com
+To: j0glesby@yahoo.com
+Subject: Yogle Account Registration Please activate your new account
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+Your account has been created.
+
+  Username: joglesby
+
+Visit this url to activate your account:
+
+  http://localhost:3000/activate/72b1b8dfb1af21835f17fc1a43f9108203c38b1a
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/login
+Completed in 60326ms (DB: 4) | 302 Found [http://localhost/users]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 22:21:11) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing AccountsController#show (for 127.0.0.1 at 2009-09-22 22:22:34) [GET]
+  Parameters: {"id"=>"72b1b8dfb1af21835f17fc1a43f9108203c38b1a"}
+  [4;35;1mUser Columns (1.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.9ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`activation_code` = '72b1b8dfb1af21835f17fc1a43f9108203c38b1a') LIMIT 1[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Update (22.3ms)[0m   [0;1mUPDATE `users` SET `activated_at` = '2009-09-23 03:22:34', `updated_at` = '2009-09-23 03:22:34' WHERE `id` = 4[0m
+Sent mail to j0glesby@yahoo.com
+
+Date: Tue, 22 Sep 2009 22:22:34 -0500
+From: support@yoglesoft.com
+To: j0glesby@yahoo.com
+Subject: Yogle Account Registration Your account has been activated!
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+joglesby, your account has been activated.  To visit the site, follow the link below:
+
+  http://localhost:3000/
+  [4;35;1mSQL (0.7ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/login
+Completed in 60192ms (DB: 26) | 302 Found [http://localhost/activate/72b1b8dfb1af21835f17fc1a43f9108203c38b1a]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 22:23:34) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-09-22 22:24:02) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"XpmkCr9pwKedf9LKkzUyheAp1Zjv4M7gdE7FpMHKiJY=", "login"=>"j0glesby", "password"=>"charic"}
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (login = 'j0glesby') LIMIT 1[0m
+  [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 9ms (View: 1, DB: 2) | 200 OK [http://localhost/session]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-09-22 22:24:12) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"XpmkCr9pwKedf9LKkzUyheAp1Zjv4M7gdE7FpMHKiJY=", "login"=>"joglesby", "password"=>"charic"}
+  [4;36;1mUser Load (1.5ms)[0m   [0;1mSELECT * FROM `users` WHERE (login = 'joglesby') LIMIT 1[0m
+  [4;35;1mUser Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Redirected to http://localhost:3000/users/4
+Completed in 9ms (DB: 3) | 302 Found [http://localhost/session]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2009-09-22 22:24:12) [GET]
+  Parameters: {"id"=>"4"}
+  [4;36;1mUser Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.6ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [4;36;1mRole Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mRole Load (0.5ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 4)) LIMIT 1[0m
+Completed in 19ms (View: 11, DB: 5) | 200 OK [http://localhost/users/4]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2009-09-22 22:24:17) [GET]
+  Parameters: {"id"=>"4"}
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.5ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [4;36;1mRole Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mRole Load (1.2ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 4)) LIMIT 1[0m
+Completed in 23ms (View: 13, DB: 7) | 200 OK [http://localhost/users/4]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#edit (for 127.0.0.1 at 2009-09-22 22:24:26) [GET]
+  Parameters: {"id"=>"4"}
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+Rendering template within layouts/application
+Rendering users/edit
+  [4;36;1mRole Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `roles`[0m
+  [4;35;1mRole Load (0.3ms)[0m   [0mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 4)) LIMIT 1[0m
+Completed in 37ms (View: 29, DB: 5) | 200 OK [http://localhost/users/4/edit]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing AccountsController#show (for 127.0.0.1 at 2009-09-22 22:39:08) [GET]
+  Parameters: {"id"=>"ee97fdb67f4ce097298713aebec5655c963bef7b"}
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+Redirected to http://localhost:3000/
+Filter chain halted as [:not_logged_in_required] rendered_or_redirected.
+Completed in 12ms (DB: 2) | 302 Found [http://localhost/activate/ee97fdb67f4ce097298713aebec5655c963bef7b]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#index (for 127.0.0.1 at 2009-09-22 22:39:08) [GET]
+  [4;36;1mPage Load (0.3ms)[0m   [0;1mSELECT * FROM `pages` [0m
+Rendering template within layouts/pages
+Rendering pages/index
+  [4;35;1mPage Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 18ms (View: 12, DB: 2) | 200 OK [http://localhost/]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 22:39:18) [GET]
+  [4;36;1mUser Columns (2.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.9ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+Redirected to http://localhost:3000/
+Filter chain halted as [:not_logged_in_required] rendered_or_redirected.
+Completed in 6ms (DB: 3) | 302 Found [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#index (for 127.0.0.1 at 2009-09-22 22:39:18) [GET]
+  [4;36;1mPage Load (0.3ms)[0m   [0;1mSELECT * FROM `pages` [0m
+Rendering template within layouts/pages
+Rendering pages/index
+  [4;35;1mPage Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 9ms (View: 3, DB: 2) | 200 OK [http://localhost/]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2009-09-22 22:39:27) [GET]
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (1.5ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+Redirected to http://localhost:3000/
+Filter chain halted as [:not_logged_in_required] rendered_or_redirected.
+Completed in 6ms (DB: 4) | 302 Found [http://localhost/signup]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#index (for 127.0.0.1 at 2009-09-22 22:39:27) [GET]
+  [4;36;1mPage Load (0.3ms)[0m   [0;1mSELECT * FROM `pages` [0m
+Rendering template within layouts/pages
+Rendering pages/index
+  [4;35;1mPage Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+Completed in 9ms (View: 3, DB: 2) | 200 OK [http://localhost/]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#destroy (for 127.0.0.1 at 2009-09-22 22:39:34) [GET]
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.6ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 4) [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/login
+Completed in 64ms (DB: 3) | 302 Found [http://localhost/logout]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 22:39:34) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 11ms (View: 9, DB: 0) | 200 OK [http://localhost/login]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-09-22 22:40:24) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"sPp4LTjAgO5aazvZ7qG7MkG2OO3n5JAh7fmy6hLy0CM=", "login"=>"j0glesby", "password"=>"charic"}
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT * FROM `users` WHERE (login = 'j0glesby') LIMIT 1[0m
+  [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 10ms (View: 1, DB: 2) | 200 OK [http://localhost/session]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing AccountsController#show (for 127.0.0.1 at 2009-09-22 22:40:32) [GET]
+  Parameters: {"id"=>"ee97fdb67f4ce097298713aebec5655c963bef7b"}
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`activation_code` = 'ee97fdb67f4ce097298713aebec5655c963bef7b') LIMIT 1[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (0.4ms)[0m   [0mUPDATE `users` SET `activated_at` = '2009-09-23 03:40:32', `updated_at` = '2009-09-23 03:40:32' WHERE `id` = 2[0m
+Sent mail to oglesby_jason@yahoo.com
+
+Date: Tue, 22 Sep 2009 22:40:32 -0500
+From: support@yoglesoft.com
+To: oglesby_jason@yahoo.com
+Subject: Yogle Account Registration Your account has been activated!
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+j0glesby, your account has been activated.  To visit the site, follow the link below:
+
+  http://localhost:3000/
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/login
+Completed in 2656ms (DB: 3) | 302 Found [http://localhost/activate/ee97fdb67f4ce097298713aebec5655c963bef7b]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-22 22:40:35) [GET]
+Rendering template within layouts/application
+Rendering sessions/new
+Completed in 3ms (View: 1, DB: 0) | 200 OK [http://localhost/login]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#create (for 127.0.0.1 at 2009-09-22 22:42:48) [POST]
+  Parameters: {"commit"=>"Log in", "authenticity_token"=>"sPp4LTjAgO5aazvZ7qG7MkG2OO3n5JAh7fmy6hLy0CM=", "login"=>"j0glesby", "password"=>"charic"}
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (login = 'j0glesby') LIMIT 1[0m
+  [4;36;1mUser Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Redirected to http://localhost:3000/users/2
+Completed in 8ms (DB: 2) | 302 Found [http://localhost/session]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2009-09-22 22:42:48) [GET]
+  Parameters: {"id"=>"2"}
+  [4;35;1mUser Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.6ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [4;35;1mRole Columns (1.5ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+  [4;36;1mRole Load (0.4ms)[0m   [0;1mSELECT `roles`.* FROM `roles` INNER JOIN `permissions` ON `roles`.id = `permissions`.role_id WHERE (`roles`.`rolename` = 'administrator') AND ((`permissions`.user_id = 2)) LIMIT 1[0m
+Completed in 28ms (View: 20, DB: 4) | 200 OK [http://localhost/users/2]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#index (for 127.0.0.1 at 2009-09-22 22:43:11) [GET]
+  [4;35;1mPage Load (0.4ms)[0m   [0mSELECT * FROM `pages` [0m
+Rendering template within layouts/pages
+Rendering pages/index
+  [4;36;1mPage Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 10ms (View: 4, DB: 2) | 200 OK [http://localhost/]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing SessionsController#new (for 127.0.0.1 at 2009-09-23 15:05:46) [GET]
+  [4;35;1mUser Columns (3.5ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (1.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Redirected to http://localhost:3000/
+Filter chain halted as [:not_logged_in_required] rendered_or_redirected.
+Completed in 7ms (DB: 5) | 302 Found [http://localhost/session/new]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing PagesController#index (for 127.0.0.1 at 2009-09-23 15:05:46) [GET]
+  [4;35;1mPage Load (0.3ms)[0m   [0mSELECT * FROM `pages` [0m
+Rendering template within layouts/pages
+Rendering pages/index
+  [4;36;1mPage Columns (9.4ms)[0m   [0;1mSHOW FIELDS FROM `pages`[0m
+Completed in 17ms (View: 4, DB: 10) | 200 OK [http://localhost/]
