@@ -40,7 +40,7 @@ test:
 production:
   adapter: mysql
   encoding: utf8
-  database: yogle_production#following rails db naming convention
+  database: yogle_production
   username: j0glesby
   password: h0wd1e
   host: mysql.yoglesoft.com
