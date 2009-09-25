@@ -10,7 +10,7 @@ Migrating to CreatePages (20090922025527)
   [4;36;1mSQL (1.0ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090922025527')[0m
 Migrating to CreateUsers (20090922025645)
   [4;35;1mSQL (0.6ms)[0m   [0mSHOW TABLES[0m
-  [4;36;1mSQL (103.9ms)[0m   [0;1mCREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `login` varchar(255), `email` varchar(255), `firstName` varchar(255), `lastName` varchar(255), `crypted_password` varchar(40), `salt` varchar(40), `created_at` datetime, `updated_at` datetime, `remember_token` varchar(255), `remember_token_expires_at` datetime, `activation_code` varchar(40), `activated_at` datetime, `password_reset_code` varchar(40), `enabled` tinyint(1) DEFAULT 1) ENGINE=InnoDB[0m
+  [4;36;1mSQL (103.9ms)[0m   [0;1mCREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `login` varchar(255), `email` varchar(255), `first_name` varchar(255), `last_name` varchar(255), `crypted_password` varchar(40), `salt` varchar(40), `created_at` datetime, `updated_at` datetime, `remember_token` varchar(255), `remember_token_expires_at` datetime, `activation_code` varchar(40), `activated_at` datetime, `password_reset_code` varchar(40), `enabled` tinyint(1) DEFAULT 1) ENGINE=InnoDB[0m
   [4;35;1mSQL (0.7ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20090922025645')[0m
 Migrating to CreateRoles (20090922070654)
   [4;36;1mSQL (94.8ms)[0m   [0;1mCREATE TABLE `roles` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `rolename` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
@@ -23,7 +23,7 @@ Migrating to CreatePermissions (20090922070717)
   [4;36;1mSQL (0.7ms)[0m   [0;1mCOMMIT[0m
   [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
   [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
-  [4;35;1mUser Create (0.3ms)[0m   [0mINSERT INTO `users` (`salt`, `lastName`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `firstName`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('ea304654e19c67f706c1052cfa3921e8c657506e', NULL, '2009-09-22 08:02:46', NULL, 'f1032959bca8ae60b0fdfcbc1ca9cbf0eabe52df', NULL, '77e9e63f02cde73e865d989411b2e79831df4460', NULL, NULL, 1, NULL, 'admin', 'jason@yoglesoft.com', '2009-09-22 08:02:46')[0m
+  [4;35;1mUser Create (0.3ms)[0m   [0mINSERT INTO `users` (`salt`, `last_name`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `first_name`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('ea304654e19c67f706c1052cfa3921e8c657506e', NULL, '2009-09-22 08:02:46', NULL, 'f1032959bca8ae60b0fdfcbc1ca9cbf0eabe52df', NULL, '77e9e63f02cde73e865d989411b2e79831df4460', NULL, NULL, 1, NULL, 'admin', 'jason@yoglesoft.com', '2009-09-22 08:02:46')[0m
 Sent mail to jason@yoglesoft.com
 
 Date: Tue, 22 Sep 2009 03:02:46 -0500
@@ -622,7 +622,7 @@ Completed in 94ms (View: 89, DB: 2) | 200 OK [http://localhost/users/new]
 
 
 Processing UsersController#create (for 127.0.0.1 at 2009-09-22 21:29:24) [POST]
-  Parameters: {"user"=>{"lastName"=>"Oglesby", "password_confirmation"=>"charic", "firstName"=>"Jason", "password"=>"charic", "login"=>"j0glesby", "email"=>"jason@yoglesoft.com"}, "commit"=>"Sign up", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8="}
+  Parameters: {"user"=>{"last_name"=>"Oglesby", "password_confirmation"=>"charic", "first_name"=>"Jason", "password"=>"charic", "login"=>"j0glesby", "email"=>"jason@yoglesoft.com"}, "commit"=>"Sign up", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8="}
   [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
   [4;35;1mSQL (1.0ms)[0m   [0mBEGIN[0m
   [4;36;1mUser Load (171.3ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`login`) = BINARY 'j0glesby') LIMIT 1[0m
@@ -642,12 +642,12 @@ Completed in 557ms (View: 4, DB: 187) | 200 OK [http://localhost/users]
 
 
 Processing UsersController#create (for 127.0.0.1 at 2009-09-22 21:29:51) [POST]
-  Parameters: {"user"=>{"lastName"=>"Oglesby", "password_confirmation"=>"charic", "firstName"=>"Jason", "password"=>"charic", "login"=>"j0glesby", "email"=>"oglesby_jason@yahoo.com"}, "commit"=>"Sign up", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8="}
+  Parameters: {"user"=>{"last_name"=>"Oglesby", "password_confirmation"=>"charic", "first_name"=>"Jason", "password"=>"charic", "login"=>"j0glesby", "email"=>"oglesby_jason@yahoo.com"}, "commit"=>"Sign up", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8="}
   [4;35;1mUser Columns (1.6ms)[0m   [0mSHOW FIELDS FROM `users`[0m
   [4;36;1mSQL (0.3ms)[0m   [0;1mBEGIN[0m
   [4;35;1mUser Load (0.4ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`login`) = BINARY 'j0glesby') LIMIT 1[0m
   [4;36;1mUser Load (0.1ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`email`) = BINARY 'oglesby_jason@yahoo.com') LIMIT 1[0m
-  [4;35;1mUser Create (27.2ms)[0m   [0mINSERT INTO `users` (`salt`, `lastName`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `firstName`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('314753e787cfe1c34d5af465dba9a2a942cd180a', 'Oglesby', '2009-09-23 02:29:51', NULL, 'aaf57846d1c0e10e27b1c8ea3e4e8db2de45b91a', NULL, 'ee97fdb67f4ce097298713aebec5655c963bef7b', 'Jason', NULL, 1, NULL, 'j0glesby', 'oglesby_jason@yahoo.com', '2009-09-23 02:29:51')[0m
+  [4;35;1mUser Create (27.2ms)[0m   [0mINSERT INTO `users` (`salt`, `last_name`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `first_name`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('314753e787cfe1c34d5af465dba9a2a942cd180a', 'Oglesby', '2009-09-23 02:29:51', NULL, 'aaf57846d1c0e10e27b1c8ea3e4e8db2de45b91a', NULL, 'ee97fdb67f4ce097298713aebec5655c963bef7b', 'Jason', NULL, 1, NULL, 'j0glesby', 'oglesby_jason@yahoo.com', '2009-09-23 02:29:51')[0m
 Sent mail to oglesby_jason@yahoo.com
 
 Date: Tue, 22 Sep 2009 21:29:51 -0500
@@ -757,12 +757,12 @@ Completed in 8ms (View: 4, DB: 2) | 200 OK [http://localhost/users/new]
 
 
 Processing UsersController#create (for 127.0.0.1 at 2009-09-22 22:06:56) [POST]
-  Parameters: {"user"=>{"lastName"=>"Oglesby", "password_confirmation"=>"charic", "firstName"=>"Chari", "password"=>"charic", "login"=>"chari", "email"=>"charioglesby@yahoo.com"}, "commit"=>"Sign up", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8="}
+  Parameters: {"user"=>{"last_name"=>"Oglesby", "password_confirmation"=>"charic", "first_name"=>"Chari", "password"=>"charic", "login"=>"chari", "email"=>"charioglesby@yahoo.com"}, "commit"=>"Sign up", "authenticity_token"=>"rmtAKpJL6qd9/lQJ31Y3yYUOrQQE2p1KDoxmyT+Gki8="}
   [4;36;1mUser Columns (6.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
   [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
   [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`login`) = BINARY 'chari') LIMIT 1[0m
   [4;35;1mUser Load (0.2ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`email`) = BINARY 'charioglesby@yahoo.com') LIMIT 1[0m
-  [4;36;1mUser Create (0.2ms)[0m   [0;1mINSERT INTO `users` (`salt`, `lastName`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `firstName`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('18d9f3b9104f78af6a25dec7034bf04534724391', 'Oglesby', '2009-09-23 03:06:56', NULL, '0523760196b7e06ec61b14be751181fa7cd5cffb', NULL, 'f8e110a35cc99345e8a3b44172ca5a1a89aebf91', 'Chari', NULL, 1, NULL, 'chari', 'charioglesby@yahoo.com', '2009-09-23 03:06:56')[0m
+  [4;36;1mUser Create (0.2ms)[0m   [0;1mINSERT INTO `users` (`salt`, `last_name`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `first_name`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('18d9f3b9104f78af6a25dec7034bf04534724391', 'Oglesby', '2009-09-23 03:06:56', NULL, '0523760196b7e06ec61b14be751181fa7cd5cffb', NULL, 'f8e110a35cc99345e8a3b44172ca5a1a89aebf91', 'Chari', NULL, 1, NULL, 'chari', 'charioglesby@yahoo.com', '2009-09-23 03:06:56')[0m
 Sent mail to charioglesby@yahoo.com
 
 Date: Tue, 22 Sep 2009 22:06:56 -0500
@@ -1003,12 +1003,12 @@ Completed in 12ms (View: 7, DB: 2) | 200 OK [http://localhost/users/new]
 
 
 Processing UsersController#create (for 127.0.0.1 at 2009-09-22 22:20:11) [POST]
-  Parameters: {"user"=>{"lastName"=>"Oglesby", "password_confirmation"=>"charic", "firstName"=>"Jason", "password"=>"charic", "login"=>"joglesby", "email"=>"j0glesby@yahoo.com"}, "commit"=>"Sign up", "authenticity_token"=>"XpmkCr9pwKedf9LKkzUyheAp1Zjv4M7gdE7FpMHKiJY="}
+  Parameters: {"user"=>{"last_name"=>"Oglesby", "password_confirmation"=>"charic", "first_name"=>"Jason", "password"=>"charic", "login"=>"joglesby", "email"=>"j0glesby@yahoo.com"}, "commit"=>"Sign up", "authenticity_token"=>"XpmkCr9pwKedf9LKkzUyheAp1Zjv4M7gdE7FpMHKiJY="}
   [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
   [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
   [4;35;1mUser Load (0.5ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`login`) = BINARY 'joglesby') LIMIT 1[0m
   [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`email`) = BINARY 'j0glesby@yahoo.com') LIMIT 1[0m
-  [4;35;1mUser Create (0.3ms)[0m   [0mINSERT INTO `users` (`salt`, `lastName`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `firstName`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('849a0e86efb35e85e9175cbf3c2216b4600cda46', 'Oglesby', '2009-09-23 03:20:11', NULL, 'c8bc13aea47094e4f82351f1c7cdb74463681023', NULL, '72b1b8dfb1af21835f17fc1a43f9108203c38b1a', 'Jason', NULL, 1, NULL, 'joglesby', 'j0glesby@yahoo.com', '2009-09-23 03:20:11')[0m
+  [4;35;1mUser Create (0.3ms)[0m   [0mINSERT INTO `users` (`salt`, `last_name`, `updated_at`, `activated_at`, `crypted_password`, `remember_token_expires_at`, `activation_code`, `first_name`, `password_reset_code`, `enabled`, `remember_token`, `login`, `email`, `created_at`) VALUES('849a0e86efb35e85e9175cbf3c2216b4600cda46', 'Oglesby', '2009-09-23 03:20:11', NULL, 'c8bc13aea47094e4f82351f1c7cdb74463681023', NULL, '72b1b8dfb1af21835f17fc1a43f9108203c38b1a', 'Jason', NULL, 1, NULL, 'joglesby', 'j0glesby@yahoo.com', '2009-09-23 03:20:11')[0m
 Sent mail to j0glesby@yahoo.com
 
 Date: Tue, 22 Sep 2009 22:20:11 -0500
