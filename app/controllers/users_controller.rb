@@ -28,8 +28,11 @@ class UsersController < ApplicationController
     redirect_to login_path   
   rescue ActiveRecord::RecordInvalid
     flash[:error] = "There was a problem creating your account."
-    throw :error
-    render :action => 'new'
+    respond_to do |format|
+      format.html { render :action => 'new' }
+      format.xml  { throw @error.message }
+    end
+    
   end
  
   def edit
