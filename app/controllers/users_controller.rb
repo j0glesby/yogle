@@ -33,7 +33,7 @@ class UsersController < ApplicationController
         format.html { flash[:error] = "There was a problem creating your account."
                       render :action => 'new' }
         format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
-        format.json  { render :json => @user.errors }
+        format.json  { render :json => @user.errors, :status => :unprocessable_entity }
       end
     end
   end
