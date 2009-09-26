@@ -28,10 +28,12 @@ class UsersController < ApplicationController
         flash[:notice] = "Thanks for signing up! Please check your email to activate your account before logging in."
         format.html { redirect_to login_path }
         format.xml { render :xml => @user, :status => :created, :location => @user }
+        format.json  { render :json => @user.to_json }
       else
         format.html { flash[:error] = "There was a problem creating your account."
                       render :action => 'new' }
         format.xml { render :xml => @user.errors, :status => :unprocessable_entity }
+        format.json  { render :json => @user.errors }
       end
     end
   end
