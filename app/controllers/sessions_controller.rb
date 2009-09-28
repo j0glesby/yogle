@@ -44,8 +44,8 @@ class SessionsController < ApplicationController
     flash.now[:error] = message
     respond_to do |format|
       format.html { render :action => 'new' }
-      format.xml { render :xml => @flash, :status => :unprocessable_entity }
-      format.json  { render :json => @flash, :status => :unprocessable_entity }
+      format.xml { render :xml => @message, :status => :unprocessable_entity }
+      format.json  { render :json => @message, :status => :unprocessable_entity }
     end
   end
  
