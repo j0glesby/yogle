@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
     end
 
     map.resource :session
+    map.resource :sessions
     map.resource :password
 
     # Install the default routes as the lowest priority.
