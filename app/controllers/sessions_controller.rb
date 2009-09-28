@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
   
   # render new.rhtml
   def new
+    
   end
 
   def create
@@ -41,7 +42,11 @@ class SessionsController < ApplicationController
  
   def failed_login(message)
     flash.now[:error] = message
-    render :action => 'new'
+    respond_to do |format|
+      format.html { render :action => 'new' }
+      format.xml { render :xml => message, :status => :unprocessable_entity }
+      format.json  { render :json => message, :status => :unprocessable_entity }
+    end
   end
  
   def successful_login
