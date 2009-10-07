@@ -2,7 +2,7 @@
 class SessionsController < ApplicationController
   layout 'application'
   before_filter :login_required, :only => :destroy
-  before_filter :not_logged_in_required, :only => [:new, :create]
+  before_filter :not_logged_in_required, :only => [:new]
   
   # render new.rhtml
   def new
@@ -55,15 +55,12 @@ class SessionsController < ApplicationController
       cookies[:auth_token] = { :value => self.current_user.remember_token , :expires => self.current_user.remember_token_expires_at }
     end
       flash[:notice] = "Logged in successfully"
-      format.xml { render :xml => @user, :status => :created, :location => @user }
-    if format.html
       return_to = session[:return_to]
       if return_to.nil?
         redirect_to user_path(self.current_user)
       else
           redirect_to return_to
       end
-    end
   end
 
 end
