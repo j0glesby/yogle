@@ -1627,3 +1627,151 @@ Processing SessionsController#create (for 127.0.0.1 at 2009-09-28 01:17:58) [GET
 Rendering template within layouts/application
 Rendering sessions/new
 Completed in 15ms (View: 1, DB: 1) | 200 OK [http://localhost/sessions/create]
+  [4;36;1mSQL (30.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (47.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (14.8ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreatePages (20090922025527)
+Migrating to CreateUsers (20090922025645)
+Migrating to CreateRoles (20090922070654)
+Migrating to CreatePermissions (20090922070717)
+Migrating to CorrectUsersColumnNames (20090926140110)
+Migrating to CreateBreadcrumbs (20091006145607)
+  [4;36;1mSQL (227.0ms)[0m   [0;1mCREATE TABLE `breadcrumbs` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `latitude` decimal(10,7), `longitude` decimal(10,7), `user_id` int(11) NOT NULL, `created_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20091006145607')[0m
+Migrating to CreateEvents (20091006161405)
+  [4;36;1mSQL (70.5ms)[0m   [0;1mCREATE TABLE `events` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11) NOT NULL, `event_type_id` int(11) NOT NULL, `participant_id` int(11), `content` varchar(160), `delivered` tinyint(1) DEFAULT 0, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20091006161405')[0m
+Migrating to CreateEventTypes (20091006161421)
+  [4;36;1mSQL (105.5ms)[0m   [0;1mCREATE TABLE `event_types` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `event_type_name` varchar(50) NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20091006161421')[0m
+Migrating to CreateInteractions (20091006161439)
+  [4;36;1mSQL (83.7ms)[0m   [0;1mCREATE TABLE `interactions` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11) NOT NULL, `interaction_category_id` int(11) NOT NULL, `behavior_id` int(11) DEFAULT 1 NOT NULL, `description` varchar(50), `content` varchar(320), `enabled` tinyint(1) DEFAULT 1 NOT NULL, `image_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20091006161439')[0m
+Migrating to CreateInteractionCategories (20091006161453)
+  [4;36;1mSQL (95.2ms)[0m   [0;1mCREATE TABLE `interaction_categories` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11) NOT NULL, `interaction_category_description` varchar(50) NOT NULL, `show_flag` int(11) DEFAULT 2 NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mUser Columns (4.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.8ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`login` = 'admin') LIMIT 1[0m
+  [4;35;1mInteractionCategory Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `interaction_categories`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreatePages (20090922025527)
+Migrating to CreateUsers (20090922025645)
+Migrating to CreateRoles (20090922070654)
+Migrating to CreatePermissions (20090922070717)
+Migrating to CorrectUsersColumnNames (20090926140110)
+Migrating to CreateBreadcrumbs (20091006145607)
+Migrating to CreateEvents (20091006161405)
+Migrating to CreateEventTypes (20091006161421)
+Migrating to CreateInteractions (20091006161439)
+Migrating to CreateInteractionCategories (20091006161453)
+  [4;36;1mSQL (0.0ms)[0m   [0;1mMysql::Error: Table 'interaction_categories' already exists: CREATE TABLE `interaction_categories` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11) NOT NULL, `interaction_category_description` varchar(50) NOT NULL, `show_flag` int(11) DEFAULT 2 NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreatePages (20090922025527)
+Migrating to CreateUsers (20090922025645)
+Migrating to CreateRoles (20090922070654)
+Migrating to CreatePermissions (20090922070717)
+Migrating to CorrectUsersColumnNames (20090926140110)
+Migrating to CreateBreadcrumbs (20091006145607)
+Migrating to CreateEvents (20091006161405)
+Migrating to CreateEventTypes (20091006161421)
+Migrating to CreateInteractions (20091006161439)
+Migrating to CreateInteractionCategories (20091006161453)
+  [4;36;1mSQL (58.1ms)[0m   [0;1mCREATE TABLE `interaction_categories` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11) NOT NULL, `interaction_category_description` varchar(50) NOT NULL, `show_flag` int(11) DEFAULT 2 NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`login` = 'admin') LIMIT 1[0m
+  [4;35;1mInteractionCategory Columns (1.9ms)[0m   [0mSHOW FIELDS FROM `interaction_categories`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreatePages (20090922025527)
+Migrating to CreateUsers (20090922025645)
+Migrating to CreateRoles (20090922070654)
+Migrating to CreatePermissions (20090922070717)
+Migrating to CorrectUsersColumnNames (20090926140110)
+Migrating to CreateBreadcrumbs (20091006145607)
+Migrating to CreateEvents (20091006161405)
+Migrating to CreateEventTypes (20091006161421)
+Migrating to CreateInteractions (20091006161439)
+Migrating to CreateInteractionCategories (20091006161453)
+  [4;36;1mSQL (67.4ms)[0m   [0;1mCREATE TABLE `interaction_categories` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11) NOT NULL, `interaction_category_description` varchar(50) NOT NULL, `show_flag` int(11) DEFAULT 2 NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mUser Columns (2.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.3ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`login` = 'admin') LIMIT 1[0m
+  [4;35;1mInteractionCategory Columns (2.6ms)[0m   [0mSHOW FIELDS FROM `interaction_categories`[0m
+  [4;36;1mSQL (3.7ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mInteractionCategory Create (0.3ms)[0m   [0mINSERT INTO `interaction_categories` (`interaction_category_description`, `updated_at`, `show_flag`, `user_id`, `created_at`) VALUES('Professional', '2009-10-06 19:58:14', 1, 1, '2009-10-06 19:58:14')[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mInteractionCategory Create (0.1ms)[0m   [0;1mINSERT INTO `interaction_categories` (`interaction_category_description`, `updated_at`, `show_flag`, `user_id`, `created_at`) VALUES('Personal', '2009-10-06 19:58:14', 2, 1, '2009-10-06 19:58:14')[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20091006161453')[0m
+Migrating to CreateFriends (20091006161512)
+  [4;35;1mSQL (197.0ms)[0m   [0mCREATE TABLE `friends` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11) NOT NULL, `friend_id` int(11) NOT NULL, `friendly` tinyint(1) NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20091006161512')[0m
+Migrating to CreateComplaints (20091006161528)
+  [4;35;1mSQL (127.8ms)[0m   [0mCREATE TABLE `complaints` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11) NOT NULL, `defendant_id` int(11) NOT NULL, `reason` varchar(160), `event_id` int(11) NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20091006161528')[0m
+Migrating to CreateImages (20091006171947)
+  [4;35;1mSQL (106.4ms)[0m   [0mCREATE TABLE `images` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11) NOT NULL, `image_location` varchar(255) NOT NULL, `image_description` varchar(50), `sharing` tinyint(1) DEFAULT 1, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20091006171947')[0m
+Migrating to CreateBehaviors (20091006185152)
+  [4;35;1mSQL (105.4ms)[0m   [0mCREATE TABLE `behaviors` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `behavior_id` int(11) NOT NULL, `behavior_description` varchar(50), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mBehavior Columns (2.1ms)[0m   [0;1mSHOW FIELDS FROM `behaviors`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mBehavior Create (1.1ms)[0m   [0;1mINSERT INTO `behaviors` (`behavior_id`, `updated_at`, `behavior_description`, `created_at`) VALUES(0, '2009-10-06 19:58:15', 'Beacon', '2009-10-06 19:58:15')[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mBehavior Create (0.2ms)[0m   [0mINSERT INTO `behaviors` (`behavior_id`, `updated_at`, `behavior_description`, `created_at`) VALUES(1, '2009-10-06 19:58:15', 'Match', '2009-10-06 19:58:15')[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mBehavior Create (0.2ms)[0m   [0;1mINSERT INTO `behaviors` (`behavior_id`, `updated_at`, `behavior_description`, `created_at`) VALUES(2, '2009-10-06 19:58:15', 'Search', '2009-10-06 19:58:15')[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20091006185152')[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mSHOW FIELDS FROM `behaviors`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mdescribe `behaviors`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `behaviors`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mSHOW FIELDS FROM `breadcrumbs`[0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mdescribe `breadcrumbs`[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW KEYS FROM `breadcrumbs`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSHOW FIELDS FROM `complaints`[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mdescribe `complaints`[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW KEYS FROM `complaints`[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mSHOW FIELDS FROM `event_types`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mdescribe `event_types`[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSHOW KEYS FROM `event_types`[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSHOW FIELDS FROM `events`[0m
+  [4;35;1mSQL (2.1ms)[0m   [0mdescribe `events`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW KEYS FROM `events`[0m
+  [4;35;1mSQL (2.7ms)[0m   [0mSHOW FIELDS FROM `friends`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mdescribe `friends`[0m
+  [4;35;1mSQL (0.9ms)[0m   [0mSHOW KEYS FROM `friends`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mSHOW FIELDS FROM `images`[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mdescribe `images`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW KEYS FROM `images`[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mSHOW FIELDS FROM `interaction_categories`[0m
+  [4;36;1mSQL (2.1ms)[0m   [0;1mdescribe `interaction_categories`[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW KEYS FROM `interaction_categories`[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mSHOW FIELDS FROM `interactions`[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mdescribe `interactions`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mSHOW KEYS FROM `interactions`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+  [4;36;1mSQL (2.0ms)[0m   [0;1mdescribe `pages`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `pages`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mSHOW FIELDS FROM `permissions`[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mdescribe `permissions`[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW KEYS FROM `permissions`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW FIELDS FROM `roles`[0m
+  [4;36;1mSQL (2.2ms)[0m   [0;1mdescribe `roles`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW KEYS FROM `roles`[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mdescribe `users`[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSHOW KEYS FROM `users`[0m

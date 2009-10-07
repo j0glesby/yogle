@@ -14,6 +14,12 @@ class User < ActiveRecord::Base
   validates_format_of       :email, :with => /(^([^@\s]+)@((?:[-_a-z0-9]+\.)+[a-z]{2,})$)|(^$)/i
 
   has_many :permissions
+  has_many :breadcrumbs
+  has_many :events
+  has_many :interactions
+  has_many :interaction_categories
+  has_many :friends
+  has_many :images
   has_many :roles, :through => :permissions
 
   before_save :encrypt_password

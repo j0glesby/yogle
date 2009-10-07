@@ -9,7 +9,83 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090926140110) do
+ActiveRecord::Schema.define(:version => 20091006185152) do
+
+  create_table "behaviors", :force => true do |t|
+    t.integer  "behavior_id",                        :null => false
+    t.string   "behavior_description", :limit => 50
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "breadcrumbs", :force => true do |t|
+    t.decimal  "latitude",   :precision => 10, :scale => 7
+    t.decimal  "longitude",  :precision => 10, :scale => 7
+    t.integer  "user_id",                                   :null => false
+    t.datetime "created_at"
+  end
+
+  create_table "complaints", :force => true do |t|
+    t.integer  "user_id",                     :null => false
+    t.integer  "defendant_id",                :null => false
+    t.string   "reason",       :limit => 160
+    t.integer  "event_id",                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "event_types", :force => true do |t|
+    t.string   "event_type_name", :limit => 50, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "events", :force => true do |t|
+    t.integer  "user_id",                                          :null => false
+    t.integer  "event_type_id",                                    :null => false
+    t.integer  "participant_id"
+    t.string   "content",        :limit => 160
+    t.boolean  "delivered",                     :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "friends", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "friend_id",  :null => false
+    t.boolean  "friendly",   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "images", :force => true do |t|
+    t.integer  "user_id",                                           :null => false
+    t.string   "image_location",                                    :null => false
+    t.string   "image_description", :limit => 50
+    t.boolean  "sharing",                         :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "interaction_categories", :force => true do |t|
+    t.integer  "user_id",                                                       :null => false
+    t.string   "interaction_category_description", :limit => 50,                :null => false
+    t.integer  "show_flag",                                      :default => 2, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "interactions", :force => true do |t|
+    t.integer  "user_id",                                                  :null => false
+    t.integer  "interaction_category_id",                                  :null => false
+    t.integer  "behavior_id",                            :default => 1,    :null => false
+    t.string   "description",             :limit => 50
+    t.string   "content",                 :limit => 320
+    t.boolean  "enabled",                                :default => true, :null => false
+    t.integer  "image_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "pages", :force => true do |t|
     t.string   "title"
