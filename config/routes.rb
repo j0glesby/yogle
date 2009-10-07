@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
     map.forgot_password '/forgot_password', :controller => 'passwords', :action => 'new'
     map.reset_password '/reset_password/:id', :controller => 'passwords', :action => 'edit'
     map.change_password '/change_password', :controller => 'accounts', :action => 'edit'
+    map.remote_login '/user', :controller => 'users', :action => 'show'
 
     # See how all your routes lay out with "rake routes"
     map.resources :pages
@@ -16,7 +17,6 @@ ActionController::Routing::Routes.draw do |map|
         users.resources :roles
     end
 
-    map.resource :session
     map.resource :sessions
     map.resource :password
 
