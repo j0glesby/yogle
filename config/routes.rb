@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
         users.resources :roles
     end
 
+    map.resource :session
     map.resource :sessions
     map.resource :password
 
