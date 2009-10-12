@@ -1,4 +1,4 @@
-class BreadcrumbController < ApplicationController
+class BreadcrumbsController < ApplicationController
   layout 'application'
   before_filter :login_required
 
