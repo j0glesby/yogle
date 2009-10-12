@@ -11,6 +11,11 @@ class UsersController < ApplicationController
   #This show action only allows users to view their own profile
   def show
       @user = current_user
+      respond_to do |format|
+        format.html {}
+        format.xml {render :xml => @user }
+        format.json  { render :json => @user.to_json }
+      end
   end
     
   # render new.rhtml
