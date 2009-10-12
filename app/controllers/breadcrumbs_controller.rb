@@ -10,6 +10,7 @@ before_filter :login_required
       if @breadcrumb.save
         flash[:notice] = 'Breadcrumb was successfully created.'
         format.xml  { render :xml => @breadcrumb, :status => :created, :location => @breadcrumb }
+        format.html { }
       else
         format.xml  { render :xml => @breadcrumb.errors, :status => :unprocessable_entity }
       end
